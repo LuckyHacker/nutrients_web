@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Carbohydrate search</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="search.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<input type="text" name="data_input" value="e.g. Potato, Beer..." onfocus='clear_obj(this);' onkeydown = "if (event.keyCode == 13) document.getElementById('data_button').click()">
+<input id="data_button" type="button" value="Search" />
+<div id="resultContainer">
+</div>
+</body>
+</html>
