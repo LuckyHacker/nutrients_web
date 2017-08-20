@@ -24,6 +24,7 @@ function parseCSV(str) {
 var file_path = "data/nutrients.csv";
 var carbIndex = 7;
 var nameIndex = 1;
+var descIndex = 49;
 var field_list = [];
 
 var xhttp = new XMLHttpRequest();
@@ -39,15 +40,24 @@ xhttp.send();
 window.onload = function() {
 
     document.getElementById("data_button").onclick = function () {
+        var carbsCheck = document.getElementById("carbsCheck");
         var searchMatch = false;
-        var resultTable = "<table><tr><th>LABEL</th><th>CARB/100g</th></tr>";
+        if (carbsCheck.checked) {
+            var resultTable = "<table><tr><th>LABEL</th><th>DESC</th><th>Carbohydrt_(g)</th></tr>";
+        } else {
+            var resultTable = "<table><tr><th>LABEL</th><th>DESC</th>";
+            for (i = 2; i < descIndex - 1; i++) {
+                resultTable += "<th>" + field_list[0][i] + "</th>"
+            }
+            resultTable += "</tr>"
+        }
         var searchTerms = document.getElementsByName('data_input')[0].value.split(" ");
 
         for (i = 1; i < field_list.length; i++) {
             if (field_list[i].length > carbIndex + 1) {
                 searchMatch = false;
                 for (j = 0; j < searchTerms.length; j++) {
-                    if (field_list[i][nameIndex].indexOf(searchTerms[j].toUpperCase()) == -1) {
+                    if (field_list[i][nameIndex].toUpperCase().indexOf(searchTerms[j].toUpperCase()) == -1) {
                         searchMatch = false;
                         break;
                     } else {
@@ -55,7 +65,15 @@ window.onload = function() {
                     }
                 }
                 if (searchMatch) {
-                    resultTable += "<tr><td>" + field_list[i][nameIndex] + "</td><td>" + field_list[i][carbIndex] + "</td></tr>";
+                    if (carbsCheck.checked) {
+                        resultTable += "<tr><td>" + field_list[i][nameIndex] + "</td><td>" + field_list[i][descIndex] + "</td><td>" + field_list[i][carbIndex] + "</td></tr>";
+                    } else {
+                        resultTable += "<tr><td>" + field_list[i][nameIndex] + "</td><td>" + field_list[i][descIndex] + "</td>";
+                        for (x = 2; x < descIndex - 1; x++) {
+                            resultTable += "<td>" + field_list[i][x] + "</td>"
+                        }
+                        resultTable += "</tr>"
+                    }
                 }
             }
         }
